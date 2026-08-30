@@ -45,6 +45,12 @@ Generate a physical geometry file ready for a 3D printing slicer or CAD software
 python mesh_generator.py
 ```
 
+### 5. Execute Numerical Peak Optimization
+Run the multivariate mathematical solver to let the algorithm automatically converge on the peak efficiency configuration:
+```bash
+python optimizer.py
+```
+
 ---
 
 ## 🧠 The Physics Cheat Sheet: How it Works
