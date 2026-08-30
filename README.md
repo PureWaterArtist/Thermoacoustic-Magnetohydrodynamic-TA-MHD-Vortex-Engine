@@ -1,10 +1,10 @@
 # 🌀 Thermoacoustic Magnetohydrodynamic (TA-MHD) Vortex Engine
 
-An elegant, pure-Python Digital Twin exploring the boundary between **Fluid Mechanics, Multiphysics Engineering, and Electromagnetism**. 
-
 📖 **New to Multiphysics?** Read our plain-language guide: [CLEAN_ENERGY_EXPLAINER.md](./CLEAN_ENERGY_EXPLAINER.md)
 
-This simulator models a zero-moving-parts fluid engine using clashing, counter-rotating magnetic fields to manipulate conductive fluids, capture acoustic waves, calculate Faraday power extraction, and map thermoacoustic transformations recursively.
+An elegant, pure-Python Digital Twin exploring the boundary between **Fluid Mechanics, Thermodynamics, Acoustics, and Electromagnetism**. 
+
+This simulator models a zero-moving-parts clean energy generator. It uses a raw thermal gradient to drive acoustic pressure oscillations, clashing counter-rotating magnetic fields to manipulate conductive fluids via the Lorentz force, and Faraday's Law of Induction to extract electrical power recursively.
 
 ---
 
@@ -12,10 +12,12 @@ This simulator models a zero-moving-parts fluid engine using clashing, counter-r
 
 The codebase is engineered to be highly modular, separating physical calculations and output layers from data constants to prevent script clutter.
 
-*   `config.py` — **The Central Hub:** Holds all material properties, structural geometry constants, and active fluid presets. Modifying values here scales the physics globally across all modules.
-*   `ta_mhd_engine.py` — **The Core Physics Canvas:** Solves the coupled differential equations and opens an interactive 2D GUI displaying acoustic density waves and fluid velocity vectors.
-*   `mhd_generator.py` — **The Power Analyzer:** Sweeps through the acoustic frequency spectrum to quantify peak Faraday Induced Voltage (EMF) and net electrical wattage output.
+*   `config.py` — **The Central Hub:** Holds all material properties, structural geometries, and active fluid presets (Liquid Sodium, Seawater, Mercury) alongside explicit **Thermal Gradient** variables. Modifying values here updates the physics across all modules globally.
+*   `ta_mhd_engine.py` — **The Core Physics Canvas:** Solves the coupled differential equations and launches an interactive 2D GUI displaying acoustic pressure wave cycles and fluid vortex velocity vectors.
+*   `mhd_generator.py` — **The Power Analyzer:** Integrates **Nikolaus Rott's Linear Critical Gradient Threshold** across the frequency spectrum to quantify peak Faraday Induced Voltage (EMF) and net electrical wattage output.
+*   `optimizer.py` — **The Numerical Solver:** Uses SciPy’s multivariate Nelder-Mead simplex algorithms to mathematically converge on absolute maximum efficiency configurations under real thermal constraints.
 *   `mesh_generator.py` — **The 3D CAD Exporter:** Procedurally builds and exports a universal 3D asset (`.obj`) of the 6-inch casing, matching your physical configurations automatically.
+*   `run_pipeline.py` — **The Master Automation Pipeline:** Sequentially runs the solver, captures the performance graphs, and compiles the optimized CAD mesh in a single command.
 
 ---
 
@@ -26,7 +28,7 @@ This simulation is written in pure Python using optimized numpy matrices to ensu
 ### 1. Install Prerequisites
 Ensure you have Python 3.8+ installed along with the required mathematical core modules:
 ```bash
-pip install numpy matplotlib
+pip install numpy scipy matplotlib
 ```
 
 ### 2. Launch the Interactive Simulation
@@ -41,20 +43,14 @@ Run the performance swept-frequency analyzer to plot voltage yields and mechanic
 python mhd_generator.py
 ```
 
-### 4. Export the 3D Manufacturing Asset
-Generate a physical geometry file ready for a 3D printing slicer or CAD software:
-```bash
-python mesh_generator.py
-```
-
-### 5. Execute Numerical Peak Optimization
-Run the multivariate mathematical solver to let the algorithm automatically converge on the peak efficiency configuration:
+### 4. Execute Numerical Peak Optimization
+Run the multivariate mathematical solver to let the algorithm automatically converge on the peak efficiency configuration under current thermal profiles:
 ```bash
 python optimizer.py
 ```
 
-### 6. Execute Full Master Automation Pipeline
-Run the master pipeline tool to sequentially compute physics optimizations, launch graphics diagnostics plots, and automatically compile matching geometric CAD assets in one click:
+### 5. Execute Full Master Automation Pipeline
+Run the master pipeline tool to compute physics optimizations, launch graphics diagnostics plots, and automatically compile matching geometric CAD assets in one click:
 ```bash
 python run_pipeline.py
 ```
@@ -66,12 +62,12 @@ python run_pipeline.py
 If you are new to Multiphysics modeling, here is how the code translates invisible natural laws into the visual graphics on your screen:
 
 1. **Vortex Generation without Moving Parts (`ta_mhd_engine.py`):**
-   The script overlaying two out-of-phase magnetic vectors spinning in opposite directions creates a standing wave that pulses back and forth on a horizontal axis. When an acoustic wave compresses a conductive fluid (like liquid sodium) across this field, it induces local currents ($\vec{J}$). The code computes the Lorentz cross-product ($\vec{F} = \vec{J} \times \vec{B}$) to generate tangential force vectors, spinning the liquid into a physical vortex.
+   The script overlays two out-of-phase magnetic vectors spinning in opposite directions to create a standing wave that pulses back and forth on a linear axis. When a sound wave compresses a conductive fluid (like liquid sodium) across this field, it induces local currents ($\vec{J}$). The code computes the Lorentz cross-product ($\vec{F} = \vec{J} \times \vec{B}$) to generate tangential force vectors, spinning the liquid into a physical vortex.
 
-2. **The Efficiency Overdrive Threshold (`mhd_generator.py`):**
+2. **The Thermoacoustic Threshold Barrier (`mhd_generator.py`):**
    * *Too Slow (Low Hz):* The fluid moves lazily, resulting in minimal Faraday Induction ($V = vBL$). 
-   * *The Resonance Apex:* The acoustic wave frequency aligns perfectly with the medium's inertia, yielding clean electrical power.
-   * *Too Fast (High Hz):* The clashing counter-rotations trigger chaotic turbulence. The input energy gets lost as pure heat friction (viscous shearing), causing net electrical efficiency to collapse.
+   * *The Critical Threshold:* The script checks Nikolaus Rott's linear stability limit ($\nabla T_c = \omega p_1 / \rho_m c_p u_1$). If the physical temperature gradient across your stack ($\nabla T_{\text{actual}}$) is greater than $\nabla T_c$, thermal energy overcomes fluid viscosity, amplifying the sound wave and driving peak electrical power.
+   * *Too Fast (High Hz):* The required critical temperature gradient surpasses the thermal heat available in `config.py`. The system enters a stall state, and the energy collapses into chaotic turbulence and heat friction (viscous shearing).
 
 3. **Freezing Sound into Plastic Walls (`mesh_generator.py`):**
    The procedural generation loop tracks points around a 3D ring ($0$ to $2\pi$). It computes the acoustic wave equation at every coordinate and offsets the internal boundary radius. When you import the output `ta_mhd_casing.obj` into Blender or Fusion 360, you will see uniform ripples on the interior track—a literal physical recording of your frequency data.
