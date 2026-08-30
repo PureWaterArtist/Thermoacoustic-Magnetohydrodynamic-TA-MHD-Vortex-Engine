@@ -2,6 +2,8 @@
 
 An elegant, pure-Python Digital Twin exploring the boundary between **Fluid Mechanics, Multiphysics Engineering, and Electromagnetism**. 
 
+📖 **New to Multiphysics?** Read our plain-language guide: [CLEAN_ENERGY_EXPLAINER.md](./CLEAN_ENERGY_EXPLAINER.md)
+
 This simulator models a zero-moving-parts fluid engine using clashing, counter-rotating magnetic fields to manipulate conductive fluids, capture acoustic waves, calculate Faraday power extraction, and map thermoacoustic transformations recursively.
 
 ---
