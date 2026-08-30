@@ -1,92 +1,79 @@
-# Open-Source Thermoacoustic Magnetohydrodynamic (TA-MHD) Vortex Engine
+# 🌀 Thermoacoustic Magnetohydrodynamic (TA-MHD) Vortex Engine
 
-An interactive, pure-Python Digital Twin exploring the boundary between **Fluid Mechanics, Multiphysics Engineering, and Electromagnetism**. 
+An elegant, pure-Python Digital Twin exploring the boundary between **Fluid Mechanics, Multiphysics Engineering, and Electromagnetism**. 
 
-This simulator models a zero-moving-parts fluid engine using clashing, counter-rotating magnetic fields to manipulate conductive fluids, capture acoustic waves, and map thermoacoustic transformations recursively.
+This simulator models a zero-moving-parts fluid engine using clashing, counter-rotating magnetic fields to manipulate conductive fluids, capture acoustic waves, calculate Faraday power extraction, and map thermoacoustic transformations recursively.
 
-## Core Physics Concepts (How it Works)
+---
 
-*   **Maxwell Symmetry:** Two fields spinning in exact spatial opposition cancel out angular vectors, yielding a stationary, pulsating magnetic standing wave along a linear axis.
-*   **The Lorentz Force Core:** When an acoustic wave forces a local density compression inside a conductive medium (such as Liquid Sodium or Plasma), it induces local current vectors ($\vec{J}$). The script calculates $\vec{F} = \vec{J} \times \vec{B}$ to spin the fluid without an physical mechanical blade.
-*   **Thermoacoustic Conversion:** Viscous molecular shear heating at the boundary vectors converts kinetic vortex energy back into real-time heat signatures.
+## 📂 Repository Architecture
 
-## Repository Setup & Execution
+The codebase is engineered to be highly modular, separating physical calculations and output layers from data constants to prevent script clutter.
 
-This simulation is written in pure Python using standard optimization libraries to guarantee compatibility across all operating systems.
+*   `config.py` — **The Central Hub:** Holds all material properties, structural geometry constants, and active fluid presets. Modifying values here scales the physics globally across all modules.
+*   `ta_mhd_engine.py` — **The Core Physics Canvas:** Solves the coupled differential equations and opens an interactive 2D GUI displaying acoustic density waves and fluid velocity vectors.
+*   `mhd_generator.py` — **The Power Analyzer:** Sweeps through the acoustic frequency spectrum to quantify peak Faraday Induced Voltage (EMF) and net electrical wattage output.
+*   `mesh_generator.py` — **The 3D CAD Exporter:** Procedurally builds and exports a universal 3D asset (`.obj`) of the 6-inch casing, matching your physical configurations automatically.
 
-### Prerequisites
+---
 
-Ensure you have Python 3.8+ installed along with the required math modules:
+## 🚀 Installation & Execution
 
+This simulation is written in pure Python using optimized numpy matrices to ensure rapid execution across all operating systems.
+
+### 1. Install Prerequisites
+Ensure you have Python 3.8+ installed along with the required mathematical core modules:
 ```bash
-pip install numpy matplotlib scipy
+pip install numpy matplotlib
 ```
 
-### Running the Digital Twin
-
-Clone the repository and run the primary script file locally to launch the interactive UI dashboard:
-
+### 2. Launch the Interactive Simulation
+Run the primary script to open the interactive canvas with live UI control sliders:
 ```bash
-git clone https://github.com
-cd YOUR_REPO_NAME
 python ta_mhd_engine.py
 ```
 
-## How to Interact with the Simulator
-
-*   **Magnetic Field Slider (Tesla):** Scales the maximum induction capacity. Increasing this value multiplies the velocity vectors of the fluid vortex.
-*   **Acoustic Frequency Slider (Hz):** Alters the input wave cycles. High values create dense compression grids, while lower frequencies showcase structural fluid slippage.
-*   **Time Step Button:** Increments the engine forward by $dt$, updating wave positions, vortex rotations, and thermodynamic friction outputs simultaneously.
- 
-## Performance & Efficiency Analysis
-
-The repository includes an automated efficiency analyzer (`mhd_generator.py`) that sweeps the system through varying operational frequencies. 
-
-By calculating Faraday's Law of Induction against fluid drag vectors, the script maps out the precise frequency sweet spot where electrical generation outpaces internal thermodynamic friction losses.
-
-To run the power diagnostics profile:
+### 3. Profile Power Generation Efficiency
+Run the performance swept-frequency analyzer to plot voltage yields and mechanical thresholds:
 ```bash
 python mhd_generator.py
 ```
 
-## 🧠 The Physics Cheat Sheet: How the Code Models Reality
-
-If you are new to Multiphysics or Magnetohydrodynamics (MHD), here is how the Python scripts translate invisible mathematical laws into your display graphics:
-
-1. **How the Vortex spins without blades (`ta_mhd_engine.py`):**
-   The script tracks a matrix of X and Y grid coordinates. When the sound wave passes through, it induces an electrical current. The code calculates the cross-product ($\vec{J} \times \vec{B}$) to create a force vector that points tangentially around the circle, physically dragging the digital pixels into a spinning whirlpool.
-
-2. **Why the Efficiency Curve peaks and drops (`mhd_generator.py`):**
-   * *Too Slow (Low Hz):* The fluid moves lazily. The voltage output ($V = vBL$) is near zero.
-   * *The Sweet Spot:* The acoustic frequency matches the natural resonance of the chamber, creating maximum fluid acceleration with clean power output.
-   * *Too Fast (High Hz):* The clashing counter-rotating forces tear the fluid apart, creating chaotic turbulence. The energy gets lost as pure heat friction instead of electricity.
-
-3. **How Sound Waves carve the 3D model (`mesh_generator.py`):**
-   The script runs a basic loop around a 3D circle ($0$ to $2\pi$). It evaluates a sine wave equation at every point and offsets the radius inward or outward. When you open the exported `.obj` file in a 3D viewer, you will see physical ridges on the inside walls—this is a frozen, physical capture of your sound wave frequency!
-
-## 3D CAD & Physical Mesh Export
-
-To transition the digital twin into physical prototyping space, the repository includes a procedural 3D engine geometry pipeline (`mesh_generator.py`). 
-
-This script maps out a exact 6-inch (152mm) diameter industrial fluid casing, complete with an internal fluid vortex track deformed procedurally by the core acoustic wave vectors. 
-
-To export the physical 3D model geometry:
+### 4. Export the 3D Manufacturing Asset
+Generate a physical geometry file ready for a 3D printing slicer or CAD software:
 ```bash
 python mesh_generator.py
 ```
 
-This outputs a universal `ta_mhd_casing.obj` file, ready for import into 3D printing slicing engines (Cura, PrusaSlicer) or parametric mechanical CAD software.
+---
+
+## 🧠 The Physics Cheat Sheet: How it Works
+
+If you are new to Multiphysics modeling, here is how the code translates invisible natural laws into the visual graphics on your screen:
+
+1. **Vortex Generation without Moving Parts (`ta_mhd_engine.py`):**
+   The script overlaying two out-of-phase magnetic vectors spinning in opposite directions creates a standing wave that pulses back and forth on a horizontal axis. When an acoustic wave compresses a conductive fluid (like liquid sodium) across this field, it induces local currents ($\vec{J}$). The code computes the Lorentz cross-product ($\vec{F} = \vec{J} \times \vec{B}$) to generate tangential force vectors, spinning the liquid into a physical vortex.
+
+2. **The Efficiency Overdrive Threshold (`mhd_generator.py`):**
+   * *Too Slow (Low Hz):* The fluid moves lazily, resulting in minimal Faraday Induction ($V = vBL$). 
+   * *The Resonance Apex:* The acoustic wave frequency aligns perfectly with the medium's inertia, yielding clean electrical power.
+   * *Too Fast (High Hz):* The clashing counter-rotations trigger chaotic turbulence. The input energy gets lost as pure heat friction (viscous shearing), causing net electrical efficiency to collapse.
+
+3. **Freezing Sound into Plastic Walls (`mesh_generator.py`):**
+   The procedural generation loop tracks points around a 3D ring ($0$ to $2\pi$). It computes the acoustic wave equation at every coordinate and offsets the internal boundary radius. When you import the output `ta_mhd_casing.obj` into Blender or Fusion 360, you will see uniform ripples on the interior track—a literal physical recording of your frequency data.
+
+---
 
 ## ⚖️ Legal Shield & Open-Source Copyleft Notice
 
-This project is locked behind strong copyleft legal shields to guarantee it remains permanently public, open-source, and free from corporate privatization.
+This project is secured behind strong open-source copyleft legal shields to guarantee it remains permanently public, un-privatized, and free for human exploration.
 
-*   **Software & Math Simulations:** Licensed under the **GNU General Public License v3.0 (GPL-3.0)**. 
-*   **Physical 3D Geometry & Hardware Layouts:** Licensed under the **CERN Open Hardware License v2 - Weakly Reciprocal (CERN-OHL-W-2.0)**.
+*   **Software & Mathematical Calculators:** Licensed under the **GNU General Public License v3.0 (GPL-3.0)**. 
+*   **Physical 3D Geometry & Manufacturing Layouts:** Licensed under the **CERN Open Hardware License v2 - Weakly Reciprocal (CERN-OHL-W-2.0)**.
 
-### Statutory Obligations for Contributors & Derivatives:
-1. **Mandatory Reciprocity:** If you modify, fork, or integrate this engine code/geometry into a commercial or private project, you **MUST** publish your entire modified source code and CAD changes openly under the same licenses.
-2. **Patent Grant:** By contributing to or distributing this project, you automatically grant a perpetual, royalty-free, irrevocable patent license to all users for any patents utilized or modified within this framework.
-3. **No Proprietary Tivoization:** This design cannot be compiled into closed-box proprietary consumer hardware systems that restrict end-user modification.
+### Legal Obligations for Contributors & Derivatives:
+1. **Mandatory Reciprocity:** If you modify, fork, or embed this engine code/geometry into a commercial or private project, you **MUST** publish your entire source code and CAD modifications openly under the exact same licenses.
+2. **Patent Grant:** By contributing to or distributing this framework, you automatically grant a perpetual, royalty-free, irrevocable patent license to all users for any patents utilized or altered within this framework.
+3. **Anti-Tivoization:** This design cannot be compiled into closed-box consumer hardware architectures that intentionally lock down or technically prevent end-user modification.
 
 *Physics belongs to the public domain. Keep it open.*
