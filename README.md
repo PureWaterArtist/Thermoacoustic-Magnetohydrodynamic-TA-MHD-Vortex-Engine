@@ -60,3 +60,17 @@ python mesh_generator.py
 ```
 
 This outputs a universal `ta_mhd_casing.obj` file, ready for import into 3D printing slicing engines (Cura, PrusaSlicer) or parametric mechanical CAD software.
+
+## ⚖️ Legal Shield & Open-Source Copyleft Notice
+
+This project is locked behind strong copyleft legal shields to guarantee it remains permanently public, open-source, and free from corporate privatization.
+
+*   **Software & Math Simulations:** Licensed under the **GNU General Public License v3.0 (GPL-3.0)**. 
+*   **Physical 3D Geometry & Hardware Layouts:** Licensed under the **CERN Open Hardware License v2 - Weakly Reciprocal (CERN-OHL-W-2.0)**.
+
+### Statutory Obligations for Contributors & Derivatives:
+1. **Mandatory Reciprocity:** If you modify, fork, or integrate this engine code/geometry into a commercial or private project, you **MUST** publish your entire modified source code and CAD changes openly under the same licenses.
+2. **Patent Grant:** By contributing to or distributing this project, you automatically grant a perpetual, royalty-free, irrevocable patent license to all users for any patents utilized or modified within this framework.
+3. **No Proprietary Tivoization:** This design cannot be compiled into closed-box proprietary consumer hardware systems that restrict end-user modification.
+
+*Physics belongs to the public domain. Keep it open.*
