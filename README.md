@@ -51,6 +51,12 @@ Run the multivariate mathematical solver to let the algorithm automatically conv
 python optimizer.py
 ```
 
+### 6. Execute Full Master Automation Pipeline
+Run the master pipeline tool to sequentially compute physics optimizations, launch graphics diagnostics plots, and automatically compile matching geometric CAD assets in one click:
+```bash
+python run_pipeline.py
+```
+
 ---
 
 ## 🧠 The Physics Cheat Sheet: How it Works
