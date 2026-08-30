@@ -37,4 +37,14 @@ python ta_mhd_engine.py
 *   **Magnetic Field Slider (Tesla):** Scales the maximum induction capacity. Increasing this value multiplies the velocity vectors of the fluid vortex.
 *   **Acoustic Frequency Slider (Hz):** Alters the input wave cycles. High values create dense compression grids, while lower frequencies showcase structural fluid slippage.
 *   **Time Step Button:** Increments the engine forward by $dt$, updating wave positions, vortex rotations, and thermodynamic friction outputs simultaneously.
-*   
+ 
+## Performance & Efficiency Analysis
+
+The repository includes an automated efficiency analyzer (`mhd_generator.py`) that sweeps the system through varying operational frequencies. 
+
+By calculating Faraday's Law of Induction against fluid drag vectors, the script maps out the precise frequency sweet spot where electrical generation outpaces internal thermodynamic friction losses.
+
+To run the power diagnostics profile:
+```bash
+python mhd_generator.py
+```
