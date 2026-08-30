@@ -48,6 +48,22 @@ To run the power diagnostics profile:
 ```bash
 python mhd_generator.py
 ```
+
+## 🧠 The Physics Cheat Sheet: How the Code Models Reality
+
+If you are new to Multiphysics or Magnetohydrodynamics (MHD), here is how the Python scripts translate invisible mathematical laws into your display graphics:
+
+1. **How the Vortex spins without blades (`ta_mhd_engine.py`):**
+   The script tracks a matrix of X and Y grid coordinates. When the sound wave passes through, it induces an electrical current. The code calculates the cross-product ($\vec{J} \times \vec{B}$) to create a force vector that points tangentially around the circle, physically dragging the digital pixels into a spinning whirlpool.
+
+2. **Why the Efficiency Curve peaks and drops (`mhd_generator.py`):**
+   * *Too Slow (Low Hz):* The fluid moves lazily. The voltage output ($V = vBL$) is near zero.
+   * *The Sweet Spot:* The acoustic frequency matches the natural resonance of the chamber, creating maximum fluid acceleration with clean power output.
+   * *Too Fast (High Hz):* The clashing counter-rotating forces tear the fluid apart, creating chaotic turbulence. The energy gets lost as pure heat friction instead of electricity.
+
+3. **How Sound Waves carve the 3D model (`mesh_generator.py`):**
+   The script runs a basic loop around a 3D circle ($0$ to $2\pi$). It evaluates a sine wave equation at every point and offsets the radius inward or outward. When you open the exported `.obj` file in a 3D viewer, you will see physical ridges on the inside walls—this is a frozen, physical capture of your sound wave frequency!
+
 ## 3D CAD & Physical Mesh Export
 
 To transition the digital twin into physical prototyping space, the repository includes a procedural 3D engine geometry pipeline (`mesh_generator.py`). 
