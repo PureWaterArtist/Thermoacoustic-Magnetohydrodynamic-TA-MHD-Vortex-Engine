@@ -1,0 +1,88 @@
+"""
+MHD Power Extraction & Efficiency Analyzer
+Module 02 for the TA-MHD Vortex Engine Repository
+"""
+
+import numpy as np
+import matplotlib.pyplot as plt
+from ta_mhd_engine import TAMHDEngine
+
+def analyze_power_efficiency():
+    # Initialize our baseline physics core (using a finer mesh for accuracy)
+    engine = TAMHDEngine(grid_size=60)
+    dt = 0.005
+    
+    # Range of acoustic frequencies to test (Sweeping from 10Hz to 400Hz)
+    frequencies = np.arange(10, 401, 10)
+    voltage_output = []
+    power_output_watts = []
+    efficiency_percentage = []
+    
+    # Engineering Constants for a 6-inch (0.152 meter) Core Casing
+    channel_width = 0.152  # 6 inches converted to meters
+    load_resistance = 0.05 # External load circuit resistance in Ohms
+    
+    print("Extracting induction vectors and calculating net wattage...")
+    
+    for hz in frequencies:
+        # 1. Simulate a localized snapshot step of the physics engine
+        # We assume a fixed, safe operational magnetic induction of 2.0 Tesla
+        vx, vy, press, therm, bx, by = engine.compute_physics_step(b_strength=2.0, ac_freq=hz, dt=dt)
+        
+        # 2. Calculate average fluid velocity vector across the core
+        avg_velocity = np.mean(np.sqrt(vx**2 + vy**2))
+        net_B = np.sqrt(bx**2 + by**2)
+        
+        # 3. FARADAY'S LAW: Compute Induced Peak Voltage
+        # V = Velocity * B-Field * Core Diameter
+        induced_v = avg_velocity * net_B * channel_width
+        voltage_output.append(induced_v)
+        
+        # 4. POWER EQUATIONS
+        # Total raw power generated (Watts)
+        raw_power = (induced_v ** 2) / load_resistance
+        
+        # Deduct Ohmic losses from fluid resistance and mechanical shear friction
+        total_losses = np.mean(therm) * (channel_width**3)
+        net_power = max(0.0, raw_power - total_losses)
+        power_output_watts.append(net_power)
+        
+        # 5. EFFICIENCY CALCULATION
+        # Percentage of input kinetic/thermal energy successfully converted to electricity
+        input_energy = raw_power + total_losses + 1e-5
+        eff = (net_power / input_energy) * 100
+        efficiency_percentage.append(eff)
+
+    # --- Plotting the Engineering Diagnostics ---
+    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 8), sharex=True)
+    
+    # Top Plot: Net Electrical Wattage Output
+    ax1.plot(frequencies, power_output_watts, color='crimson', lw=2.5, label='Net Power (W)')
+    ax1.fill_between(frequencies, power_output_watts, color='crimson', alpha=0.15)
+    ax1.set_ylabel("Net Extracted Power (Watts)", fontsize=11, fontweight='bold')
+    ax1.set_title("TA-MHD Vortex Engine: Electrical Power Harvest Vector", fontsize=13, fontweight='bold', pad=15)
+    ax1.grid(True, linestyle='--', alpha=0.6)
+    
+    # Bottom Plot: Efficiency Curve
+    ax2.plot(frequencies, efficiency_percentage, color='teal', lw=2.5, label='Efficiency %')
+    ax2.fill_between(frequencies, efficiency_percentage, color='teal', alpha=0.15)
+    ax2.set_xlabel("Acoustic Input Frequency (Hz)", fontsize=11, fontweight='bold')
+    ax2.set_ylabel("Net System Efficiency (%)", fontsize=11, fontweight='bold')
+    ax2.grid(True, linestyle='--', alpha=0.6)
+    
+    # Identify and highlight the optimal operating frequency
+    max_eff_idx = np.argmax(efficiency_percentage)
+    opt_freq = frequencies[max_eff_idx]
+    opt_eff = efficiency_percentage[max_eff_idx]
+    
+    ax2.axvline(x=opt_freq, color='black', linestyle=':', alpha=0.8)
+    ax2.annotate(f'Optimal Operational Point\nFreq: {opt_freq} Hz\nEff: {opt_eff:.1f}%',
+                 xy=(opt_freq, opt_eff), xytext=(opt_freq + 20, opt_eff - 15),
+                 arrowprops=dict(facecolor='black', shrink=0.05, width=1, headwidth=6))
+    
+    plt.tight_layout()
+    plt.show()
+
+if __name__ == "__main__":
+    analyze_power_efficiency()
+  
