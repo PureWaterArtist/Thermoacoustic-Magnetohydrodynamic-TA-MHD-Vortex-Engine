@@ -48,3 +48,15 @@ To run the power diagnostics profile:
 ```bash
 python mhd_generator.py
 ```
+## 3D CAD & Physical Mesh Export
+
+To transition the digital twin into physical prototyping space, the repository includes a procedural 3D engine geometry pipeline (`mesh_generator.py`). 
+
+This script maps out a exact 6-inch (152mm) diameter industrial fluid casing, complete with an internal fluid vortex track deformed procedurally by the core acoustic wave vectors. 
+
+To export the physical 3D model geometry:
+```bash
+python mesh_generator.py
+```
+
+This outputs a universal `ta_mhd_casing.obj` file, ready for import into 3D printing slicing engines (Cura, PrusaSlicer) or parametric mechanical CAD software.
