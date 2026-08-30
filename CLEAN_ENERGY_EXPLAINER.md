@@ -1,6 +1,6 @@
 # 🌍 Plain Language Guide: Turning Heat into Clean Electricity
 
-Welcome! If you don't have a degree in advanced physics or fluid mechanics, this guide is for you. This document explains exactly how this engine works, why it is a breakthrough for clean energy, and where it can be used in the real world—all in plain, everyday language.
+Welcome! If you don't have a degree in advanced physics or fluid mechanics, this guide is for you. This document explains exactly how this engine works, why it is a breakthrough for clean energy, and how it uses a thermal gradient to generate power—all in plain, everyday language.
 
 ---
 
@@ -11,7 +11,7 @@ Think about almost every power plant on Earth today (coal, natural gas, nuclear,
 2. That screaming steam physically forces a massive metal **turbine blade** to spin.
 3. The spinning blade turns a mechanical shaft inside a generator to make electricity.
 
-**The Problem:** High-speed metal blades, bearings, and spinning shafts create intense friction. They wear out, snap, melt, leak oil, and require constant, expensive human maintenance. If a pump seal breaks in a remote area or out in deep space, the whole system dies.
+**The Problem:** High-speed metal blades, bearings, and spinning shafts create intense friction. They wear out, snap, melt, leak oil, and require constant, expensive human maintenance. If a pump seal breaks in a remote area or underground, the whole system dies.
 
 **Our Solution:** This engine has **zero solid moving parts**. 
 There are no pistons, no shafts, and no spinning turbine blades. Instead, we use an electrically conductive liquid (like a safe liquid metal alloy or even saltwater) as a "liquid piston." The fluid itself bounces back and forth, acts as the turbine, and generates the electricity all at once. Because nothing solid rubs together, there is virtually nothing to break, wear down, or maintain.
@@ -20,13 +20,15 @@ There are no pistons, no shafts, and no spinning turbine blades. Instead, we use
 
 ## 🚂 The Three Steps: How It Works (Without the Jargon)
 
-Imagine a closed, hollow doughnut-shaped tube filled with a liquid metal. Here is how we extract clean power from it:
+Imagine a closed, hollow doughnut-shaped tube filled with a liquid metal. Here is how we extract clean power from it using a simple fire-and-ice temperature gradient:
 
 ### Step 1: The Sound Wave (The Engine's Heartbeat)
-We trap heat at one end of the tube (from a solar panel or a factory exhaust pipe) and keep the other end cold. Nature hates unequal temperatures. This extreme temperature difference causes the atoms in the fluid to violently expand and contract. This rapid bouncing creates an intense, roaring **sound wave** inside the tube. This sound wave acts like an invisible, rhythmic piston, pumping the fluid back and forth at a high frequency.
+We trap heat at one end of the tube (from a solar panel or a factory exhaust pipe) and keep the other end cold. Nature hates unequal temperatures. 
+
+When individual molecules of liquid metal get pushed into the hot zone, they absorb heat and violently expand, causing a miniature explosion of pressure. When they recoil back into the cold zone, they contract. If the temperature difference between the hot and cold exchangers is steep enough, this rapid bouncing creates a self-sustaining, roaring **sound wave** inside the tube. This sound wave acts like an invisible, rhythmic piston, pumping the fluid back and forth at a high frequency.
 
 ### Step 2: The Magnetic Clashing (Creating the Vortex)
-We place specialized electromagnets around the tube. By feeding them electricity in opposite directions, we create **counter-rotating magnetic fields**. When our sound-driven liquid metal bounces through these clashing magnetic fields, the magnetic forces grab the fluid and twist it into a violent, spinning whirlpool—a **fluid vortex**. 
+We place specialized electromagnets around the tube. By feeding them electricity in opposite directions, we create **counter-rotating magnetic fields**. When our sound-driven liquid metal bounces through these clashing magnetic fields, the magnetic forces grab the fluid and twist it into a rapid, spinning whirlpool—a **fluid vortex**. 
 
 ### Step 3: Harvesting the Current (The Free Electricity)
 According to the laws of physics, whenever you force a moving conductor (our liquid metal vortex) to cut across a magnetic field, **electricity is automatically generated**. We place electrical contacts on the pipe walls, and the spinning liquid metal pushes clean electrical current straight out of the machine and into the power grid.
@@ -45,9 +47,9 @@ Because this engine can survive extreme environments where normal machinery woul
 ---
 
 ## 🛠️ How to See it in the Code
-* Want to see the fluid vortex spin? Run `ta_mhd_engine.py`
-* Want to see the frequency sweet spot? Run `mhd_generator.py`
-* Want to let the computer calculate peak efficiency? Run `optimizer.py`
+* Want to see the fluid vortex spin under the thermal gradient? Run `ta_mhd_engine.py`
+* Want to see the frequency sweet spot where heat turns into sound? Run `mhd_generator.py`
+* Want to let the computer calculate peak efficiency under real thermal limits? Run `optimizer.py`
 * Want to print a 3D model of the casing? Run `mesh_generator.py`
 
 *Physics belongs to the public domain. Let's build a cleaner future.*
