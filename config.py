@@ -1,38 +1,52 @@
-#  Copyright (C) 2026  [Your GitHub Username]
+#  Copyright (C) 2026 PureWaterArtist
 #  Licensed under the GNU General Public License v3.0 (GPL-3.0)
 #  Physical outputs governed by CERN-OHL-W-2.0.
 
 """
 Global Configuration Framework for the TA-MHD Vortex Engine.
-Centralizing all physical constants to keep core engine scripts clean.
+Centralizing structural geometry, electrical parameters, and advanced 
+thermoacoustic properties to keep core engine solvers cleanly decoupled.
 """
 
 # Core Structural Dimensions
 ENGINE_DIMENSIONS = {
     "outer_diameter_inches": 6.0,
-    "outer_radius_mm": 76.2,   # 3 inches
-    "inner_radius_mm": 65.0,   # Internal fluid chamber boundary
-    "casing_height_mm": 50.0,  # Depth of the internal chamber
+    "outer_radius_mm": 76.2,      # 3 inches
+    "inner_radius_mm": 65.0,      # Internal fluid chamber boundary
+    "casing_height_mm": 50.0,     # Depth of the internal chamber
+}
+
+# Thermal Gradient States (Simulating an industrial waste-heat stack)
+THERMAL_GRADIENT = {
+    "hot_exchanger_kelvin": 673.15,   # 400°C Typical industrial waste heat source
+    "cold_exchanger_kelvin": 293.15,  # 20°C Ambient water cooling loop
+    "stack_length_meters": 0.05,      # 50mm structural thermoacoustic stack length
 }
 
 # Advanced Material Presets for Multiphysics Simulation
 FLUID_PRESETS = {
     "liquid_sodium": {
         "name": "Liquid Sodium Alloy (NaK)",
-        "density": 927.0,       # kg/m^3
-        "conductivity": 1e7,    # S/m (Ultra-high electrical conductivity)
-        "description": "Standard aerospace/nuclear reactor coolant."
+        "density": 927.0,          # kg/m^3
+        "conductivity": 1e7,       # S/m (Ultra-high electrical conductivity)
+        "specific_heat_cp": 1260.0, # J/(kg·K)
+        "speed_of_sound": 2300.0,  # m/s
+        "description": "Standard high-performance aerospace/nuclear reactor coolant."
     },
     "seawater": {
         "name": "Heavy Saltwater / Seawater",
-        "density": 1024.0,      # kg/m^3
-        "conductivity": 4.8,    # S/m (Low conductivity, requires massive Tesla fields)
-        "description": "Hydro-acoustic marine propulsion simulation."
+        "density": 1024.0,         # kg/m^3
+        "conductivity": 4.8,       # S/m (Low conductivity, requires high magnetic fields)
+        "specific_heat_cp": 4000.0, # J/(kg·K)
+        "speed_of_sound": 1500.0,  # m/s
+        "description": "Hydro-acoustic marine propulsion and tidal energy harvesting."
     },
     "mercury": {
         "name": "Liquid Mercury",
-        "density": 13546.0,     # kg/m^3 (Massive inertia, slow vortex acceleration)
-        "conductivity": 1e6,    # S/m (High conductivity, heavy fluid)
+        "density": 13546.0,        # kg/m^3 (Massive inertia, heavy dampening effects)
+        "conductivity": 1e6,       # S/m (High conductivity, dense medium)
+        "specific_heat_cp": 139.0,  # J/(kg·K)
+        "speed_of_sound": 1450.0,  # m/s
         "description": "High-mass magnetohydrodynamic laboratory benchmark."
     }
 }
@@ -43,5 +57,5 @@ ACTIVE_FLUID = "liquid_sodium"
 
 # Electrical Extraction Properties
 ELECTRICAL_LOAD = {
-    "external_resistance_ohms": 0.05,  # Simulating a matched external battery/circuit load
+    "external_resistance_ohms": 0.05,  # Simulating a matched external battery/load circuit
 }
