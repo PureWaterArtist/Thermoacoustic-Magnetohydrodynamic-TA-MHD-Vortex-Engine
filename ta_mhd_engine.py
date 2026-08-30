@@ -19,35 +19,40 @@
 
 """
 Core Visualization Engine for the TA-MHD Vortex Engine.
-Calculates and updates coupled fluid, magnetic, and acoustic matrices.
+Calculates and updates coupled fluid, magnetic, acoustic, and thermal matrices.
 """
 
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.widgets import Slider, Button
-from config import ENGINE_DIMENSIONS, FLUID_PRESETS, ACTIVE_FLUID
+from config import ENGINE_DIMENSIONS, THERMAL_GRADIENT, FLUID_PRESETS, ACTIVE_FLUID
 
 class TAMHDEngine:
     def __init__(self, grid_size=40):
         self.grid_size = grid_size
         
-        # Pull configurations cleanly from config.py
+        # Pull global properties cleanly from config.py
         self.fluid_props = FLUID_PRESETS[ACTIVE_FLUID]
         self.density = self.fluid_props["density"]
         self.conductivity = self.fluid_props["conductivity"]
+        self.cp = self.fluid_props["specific_heat_cp"]
+        
+        # Calculate the available thermal driving force across the stack
+        delta_t = THERMAL_GRADIENT["hot_exchanger_kelvin"] - THERMAL_GRADIENT["cold_exchanger_kelvin"]
+        self.actual_gradient = delta_t / THERMAL_GRADIENT["stack_length_meters"]
         
         # Establish chamber bounds using metric equivalents
-        bound = ENGINE_DIMENSIONS["outer_radius_mm"] / 38.1 # Standardized scale for grid plotting
+        bound = ENGINE_DIMENSIONS["outer_radius_mm"] / 38.1
         x = np.linspace(-bound, bound, grid_size)
         y = np.linspace(-bound, bound, grid_size)
         
         self.X, self.Y = np.meshgrid(x, y)
-        self.R = np.sqrt(self.X**2 + self.Y**2) + 1e-5 # Avoid division by zero
+        self.R = np.sqrt(self.X**2 + self.Y**2) + 1e-5
         self.time = 0.0
         
     def compute_physics_step(self, b_strength, ac_freq, dt):
         """
-        Solves the coupled Maxwell-Navier-Stokes-Acoustic equations.
+        Solves the thermally coupled Maxwell-Navier-Stokes-Acoustic equations.
         """
         self.time += dt
         omega = 2 * np.pi * ac_freq
@@ -56,14 +61,13 @@ class TAMHDEngine:
         theta_1 = omega * self.time
         theta_2 = -omega * self.time
         
-        B1_x, B1_y = b_strength * np.cos(theta_1), b_strength * np.sin(theta_1)
-        B2_x, B2_y = b_strength * np.cos(theta_2), b_strength * np.sin(theta_2)
+        Bx_net = b_strength * np.cos(theta_1) + b_strength * np.cos(theta_2)
+        By_net = b_strength * np.sin(theta_1) + b_strength * np.sin(theta_2)
         
-        Bx_net = B1_x + B2_x
-        By_net = B1_y + B2_y
-        
-        # 2. ACOUSTICS: Pressure Density Fluctuations
-        acoustic_wave = np.sin(2 * np.pi * (self.R - 5 * self.time))
+        # 2. THERMOACOUSTICS: Rayleigh-Criterion Wave Amplification
+        # Thermal gradient scales the baseline intensity of the acoustic pressure field
+        thermal_amplification = max(0.1, self.actual_gradient / 5000.0) 
+        acoustic_wave = thermal_amplification * np.sin(2 * np.pi * (self.R - 5 * self.time))
         current_density = self.conductivity * acoustic_wave * 0.01
         
         # 3. MHD/FLUID: Lorentz Force Driving the Vortex (F = J x B)
@@ -83,22 +87,22 @@ class TAMHDEngine:
 def run_digital_twin():
     engine = TAMHDEngine()
     dt = 0.01
-    init_b = 1.5   # Tesla
-    init_hz = 60.0 # Hz
+    init_b = 1.5   
+    init_hz = 60.0 
     
     fig, axs = plt.subplots(1, 2, figsize=(14, 6))
     plt.subplots_adjust(bottom=0.25)
     
     vx, vy, press, therm, bx, by = engine.compute_physics_step(init_b, init_hz, 0)
     
-    im_press = axs[0].imshow(press, extent=[-2, 2, -2, 2], cmap='coolwarm', origin='lower', vmin=-1, vmax=1)
-    quiver_vortex = axs[0].quiver(engine.X, engine.Y, vx, vy, color='black', alpha=0.6, scale=0.5)
-    axs[0].set_title(f"Acoustic Density & Vortex Vectors\nMedium: {engine.fluid_props['name']}")
-    fig.colorbar(im_press, ax=axs[0], label="Relative Density Delta")
+    im_press = axs.imshow(press, extent=[-2, 2, -2, 2], cmap='coolwarm', origin='lower', vmin=-1, vmax=1)
+    quiver_vortex = axs.quiver(engine.X, engine.Y, vx, vy, color='black', alpha=0.6, scale=0.5)
+    axs.set_title(f"Acoustic Wave Core\nMedium: {engine.fluid_props['name']}")
+    fig.colorbar(im_press, ax=axs, label="Acoustic Density Delta")
     
-    im_therm = axs[1].imshow(therm, extent=[-2, 2, -2, 2], cmap='inferno', origin='lower')
-    axs[1].set_title("Thermal Energy Density (Shearing Friction)")
-    fig.colorbar(im_therm, ax=axs[1], label="Joules / m^3")
+    im_therm = axs.imshow(therm, extent=[-2, 2, -2, 2], cmap='inferno', origin='lower')
+    axs.set_title(f"Thermal Energy Density\nGradient Force: {engine.actual_gradient:.0f} K/m")
+    fig.colorbar(im_therm, ax=axs, label="Joules / m^3")
     
     ax_b = plt.axes([0.15, 0.13, 0.65, 0.03])
     ax_hz = plt.axes([0.15, 0.08, 0.65, 0.03])
